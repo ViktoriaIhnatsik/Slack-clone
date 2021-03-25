@@ -39,16 +39,16 @@ router.get('/dashboard', ensureAuthenticated, (request, response) => {
   });
 });
 
-/*
+
 //Öpna ett room
 router.get('/dashboard/:id', ensureAuthenticated, (request, response) => {
   Room.findById(request.params.id, (err, room) => { 
     if (err) return console.error(err);
-  response.render('dashboard', { room, user: request.user });
-  console.log(rooms)
+  response.render('room', { room, user: request.user });
+  console.log(room)
   console.log(request.user)
   });
 });
-*/
+
 
 module.exports = router; //exportera den routen
