@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', message => {  // chat message from script.js
    const user = getCurrentUser(socket.id);
-   io.emit('chat message',  formatMessage( user.username, message ))  // sckica meddelande till alla i chat, alla se samma meddelande
+   io.to(user.room).emit('chat message',  formatMessage( user.username, message ))  // sckica meddelande till alla i chat, alla se samma meddelande
     
    const newMessage = new Message({ message})  // skapa new message i model Message
          newMessage.save() // spara i db  
