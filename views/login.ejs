@@ -1,0 +1,36 @@
+<main class="login">
+  <div class="form-signin">
+<form action="/users/login" method="post">
+
+  <h1 class="h3 mb-3 fw-normal">Please login</h1>
+  <%- include('partials/messages') %> <!-- includera fel meddelande från partials map messages.ejs-->
+
+    <label for="inputEmail" class="visually-hidden">Email address</label>
+
+    <input 
+    type="email" 
+    id="inputEmail" 
+    class="form-control" 
+    name="email" 
+    placeholder="Email address"
+    value="" required>
+
+    <label for="inputPassword" class="visually-hidden">Password</label>
+
+    <input 
+    type="password" 
+    id="inputPassword" 
+    class="form-control" 
+    name="password" 
+    placeholder="Password"
+    value="" required>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+</form>
+
+<p><a href="/users/register">No account? Get one!</a></p> <!-- länk till register sida -->
+
+</div>
+
+</main>

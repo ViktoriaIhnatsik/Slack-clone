@@ -1,0 +1,49 @@
+
+    <div class="chat-container">
+  
+      <header class="chat-header">
+        <h1> <a href="/"> Slack Clone </a></h1>
+        
+          <span><i class="fas fa-user"></i> <%= user.name %> </span>
+          <input type="text" value="<%= user.name %>" id="userName" hidden>
+          
+        <a href="/users/logout" id="leave-btn" class="btn">Leave Slack</a>
+      </header>
+  
+      <main class="chat-main">
+
+        <div class="chat-sidebar">
+
+          <h2><i class="fas fa-comments"></i> Channels</h2>
+          <% rooms.forEach(room => { %> 
+          <h3 id="room-name"> <a href="/chat/dashboard/<%= room.id %>">
+            # <%= room.name %>
+            <input type="text" value="<%= room.id %>" id="roomId" hidden>
+          </a></h3>
+          <% }) %>
+
+          <form method="post" action="/chat/dashboard">
+            <input name="name" type="text" >
+            <input type="submit" value="Create Channel" />
+          </form>
+
+          <h2><i class="fas fa-users"></i> Users</h2>
+        
+         <ul id="users"></ul> 
+        
+        </div>
+
+        <div class="chat-messages"> </div>
+
+      </main>
+  
+      <div class="chat-form-container">
+        <form id="chat-form">
+          <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+          <button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+        </form>
+      </div>
+
+    </div>
+  
+   
