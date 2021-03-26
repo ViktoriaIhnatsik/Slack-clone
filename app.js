@@ -10,6 +10,7 @@ const passport = require('passport')
 const http = require('http')  // sätts upp socket
 const socketio = require('socket.io')
 const User = require('./models/users')
+const Room = require('./models/rooms')
 const Message = require('./models/messages')  // model Message
 const server = http.createServer(app)
 const io = socketio(server)
@@ -89,12 +90,32 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', message => {  // chat message from script.js
    const user = getCurrentUser(socket.id);
-   io.to(user.room).emit('chat message',  formatMessage( user.username, message ))  // sckica meddelande till alla i chat, alla se samma meddelande
+   let author = user.username                            //user.username,
+   io.to(user.room).emit('chat message',  formatMessage( author,  message ))  // sckica meddelande till alla i chat, alla se samma meddelande
     
-   const newMessage = new Message({ message})  // skapa new message i model Message
-         newMessage.save() // spara i db  
-   
- })
+
+   User.findOne({ name: user.username}).exec(
+     (error, currentUser) => {
+       if(error) {
+         throw error;
+       }
+       author = currentUser._id;
+       const newMessage = new Message({ message, author})  // skapa new message i model Message
+       newMessage.save()  // spara i db  
+
+       Room.updateOne(
+         {_id: user.room},
+         { $push:{ messages: newMessage._id}},
+         (error) => {
+           if(error) {
+             console.log(error);
+           }
+         }
+       )
+      }
+   )
+  })
+ 
   
     socket.on('disconnect', () => {
         console.log('a user disconnected')  // när användaren avslutet connection

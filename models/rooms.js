@@ -7,9 +7,12 @@ const RoomSchema = new mongoose.Schema({  // skapa schema
         required: true,
         maxLength: 100
     },
-/*
-    messages: []
-     */
+
+    messages: [{
+        type: Schema.Types.ObjectId,
+		ref: 'Message'
+    }]
+     
 })
 
 const Room = mongoose.model('Room', RoomSchema) // skapa model room
