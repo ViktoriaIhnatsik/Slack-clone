@@ -27,7 +27,15 @@
       <ul id="users"></ul>
       </div>
 
-      <div class="chat-messages"> </div>
+      <div class="chat-messages"> 
+        <% for(let msg of room.messages) { %>
+        <div class="message"><p class="meta"><%= msg.author.name %> <span><%= moment(msg.date).format('h:mm a') %></span></p>
+        <p class="text">
+          <%= msg.message %>
+        </p>
+        </div>
+      <% } %>
+      </div>
       
       </main>
       

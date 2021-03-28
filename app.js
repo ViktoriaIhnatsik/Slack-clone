@@ -77,23 +77,17 @@ io.on('connection', (socket) => {
 		const user = userJoin(socket.id, userName, roomId);
 		
     socket.join(user.room);
-/*
-   // Send users and room info
-		io.to(user.room).emit("roomUsers", {
-			room: user.room,
-			users: getRoomUsers(user.room),
-		});
-*/
+
 	})
 
  // Listen for chatMessage
 
   socket.on('chat message', message => {  // chat message from script.js
    const user = getCurrentUser(socket.id);
-   let author = user.username                            //user.username,
+   let author = user.username                            
    io.to(user.room).emit('chat message',  formatMessage( author,  message ))  // sckica meddelande till alla i chat, alla se samma meddelande
     
-
+    // Spara data i dbb
    User.findOne({ name: user.username}).exec(
      (error, currentUser) => {
        if(error) {
@@ -101,7 +95,7 @@ io.on('connection', (socket) => {
        }
        author = currentUser._id;
        const newMessage = new Message({ message, author})  // skapa new message i model Message
-       newMessage.save()  // spara i db  
+       newMessage.save()  
 
        Room.updateOne(
          {_id: user.room},
@@ -119,14 +113,7 @@ io.on('connection', (socket) => {
   
     socket.on('disconnect', () => {
         console.log('a user disconnected')  // när användaren avslutet connection
-       /* const user = userLeave(socket.id);
-	    	if (user) {
-			// Send users and room info
-			io.to(user.room).emit("roomUsers", {
-				room: user.room,
-				users: getRoomUsers(user.room),
-			})
-      }*/
+      
    })
  })
 
