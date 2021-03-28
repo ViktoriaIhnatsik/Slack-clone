@@ -85,7 +85,6 @@ a {
 /* Chat Page */
 
 .chat-container {
-	height: 100vh;
 	max-width: auto;
 	background: #fff;
 	margin: auto;
@@ -95,15 +94,13 @@ a {
 .chat-header {
 	background: var(--dark-color-a);
 	color: #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 	padding: 15px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 .chat-header h1 a {
-	color:inherit;
+	color: inherit;
 }
 
 .chat-main {
@@ -114,13 +111,13 @@ a {
 .chat-sidebar {
 	background: var(--dark-color-b);
 	color: #fff;
-	padding: 5px 10px 250px 20px;
+	padding: 5px 10px 300px 20px;
   overflow-y: scroll;
-	
-
 }
+
 .chat-sidebar h2 {
 	font-size: 20px;
+	padding-top: 10px;
 }
 .chat-sidebar h3 {
 	font-size: 15px;
@@ -169,11 +166,11 @@ a {
 	padding: 20px 30px;
 	background-color: var(--dark-color-a);
 	
-	
 }
 
 .chat-form-container form {
 	display: flex;
+	padding-bottom: 10px;
 	
 }
 

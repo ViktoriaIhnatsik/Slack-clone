@@ -71,4 +71,22 @@ fetchUsers = () => {
 //Funktioner som ska köras när  sida laddas
 document.addEventListener('DOMContentLoaded', () => {
   fetchUsers();
+
+  // File uppload
+document.getElementById('form-upload').addEventListener('submit', e => {
+  e.preventDefault();
+  const input = document.getElementById('fileinput');
+  const uploadFile = input.files[0];
+  const data = new FormData();
+  data.append('uploadFile', uploadFile);
+  fetch('/chat/upload', {
+      method: 'POST',
+      body: data
+  })
+      .then(response => {
+          const text = '<a href="/public/uploads/' + uploadFile.name + '" target=_blank>' + uploadFile.name + '</a>';
+          document.getElementById('msg').value = text;
+      })
+      .catch(error => { console.log(error)});
+});
 });

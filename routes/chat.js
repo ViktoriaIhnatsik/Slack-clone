@@ -12,6 +12,17 @@ const Room = require('../models/rooms')
 const User = require('../models/users')  
 const Message = require('../models/messages') 
 
+// for files  upload
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+      callback(null, 'public/uploads/')
+  },
+  filename: (req, file, callback) => {
+      callback(null, file.originalname)
+  }
+});
+const upload = multer({ storage: storage });
+
 
 // Dashboard   (visa alla rooms i sidebar)
 router.get('/dashboard', ensureAuthenticated, (request, response) => {
@@ -28,6 +39,13 @@ router.get('/dashboard', ensureAuthenticated, (request, response) => {
     response.status(200).json(users); 
   })
  })
+
+ // File upload
+router.post('/upload', upload.single('uploadFile'), (request, response) => {
+  console.log(request.file, response.body);
+  response.sendStatus(200);
+  response.end();
+});
 
 
  
@@ -49,8 +67,8 @@ router.get('/dashboard/:id', ensureAuthenticated, (request, response) => {
   Room.findById(request.params.id)
   .populate({path: 'messages', populate: { path: 'author', select: 'name'}})
   .exec((err, room) => { 
-    console.log(room)
-    console.log(request.user)
+    //console.log(room)
+    //console.log(request.user)
     response.render('room', { room, user: request.user, moment: moment });
 });
 });
