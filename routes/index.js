@@ -1,11 +1,11 @@
-const express = require('express')  // hämta express paket 
-const router = express.Router() // sätta up router
+const express = require('express')  
+const router = express.Router() 
 
 
 // Login page
 router.get('/', (request, response) => {
-    response.render('welcome')  // använda welcome.ejs sida
+    response.render('welcome')  
 })
 
 
-module.exports = router //exportera den routen
+module.exports = router 

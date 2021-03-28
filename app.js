@@ -1,27 +1,27 @@
-const express = require('express') // hämta express paket 
-const app = express()   // sätta up app
+const express = require('express') 
+const app = express()   
 
-const expressEjsLayout = require('express-ejs-layouts') // sätta up ejs
-const flash = require('connect-flash') // sätta up flash
-const session = require('express-session') //  sätta up session hanterare
-const path = require('path')  // // sätta up path 
+const expressEjsLayout = require('express-ejs-layouts') 
+const flash = require('connect-flash') 
+const session = require('express-session') 
+const path = require('path')  
 const passport = require('passport')
 
-const http = require('http')  // sätts upp socket
+const http = require('http')  
 const socketio = require('socket.io')
 const User = require('./models/users')
 const Room = require('./models/rooms')
-const Message = require('./models/messages')  // model Message
+const Message = require('./models/messages')  
 const server = http.createServer(app)
 const io = socketio(server)
 
 const formatMessage = require('./utils/messages')
-const { userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users')
+const { userJoin, getCurrentUser} = require('./utils/users')
 
-require('./config/passport')(passport)  // köra passport funkt
+require('./config/passport')(passport)  
 
 // Mongoose
-const mongoose = require('mongoose') //sätta  up mongoose
+const mongoose = require('mongoose') 
 mongoose.connect('mongodb://localhost:27017/slack_clone', {    
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -34,12 +34,12 @@ db.once('open', () => {
 
 
 // EJS
-app.set('view engine', 'ejs')  // använda ejs som view engine, då behöver vi inte skriva ejs i router för varje sida, räker bara namn 
-app.use(expressEjsLayout) // använda layout
+app.set('view engine', 'ejs')  
+app.use(expressEjsLayout) 
 
-app.use(express.urlencoded({ extended: true }))  // för att använda post 
+app.use(express.urlencoded({ extended: true }))  // use post 
 
-app.use('/public', express.static(path.join(__dirname, 'public')));  // använda allt som ligger i public map
+app.use('/public', express.static(path.join(__dirname, 'public')));  // use everything in the public map
 
 // Sessions
 app.use(session({  
@@ -50,11 +50,11 @@ app.use(session({
 
 // Passport
 app.use(passport.initialize())
-app.use(passport.session()) // kommer spara user data i session
+app.use(passport.session()) // will save user data in session
 
 // Flash
-app.use(flash())  // request hantera flash meddelande
-app.use((request, response, next) => { // skicka medel 
+app.use(flash())  // 
+app.use((request, response, next) => { 
     response.locals.success_msg = request.flash('success_msg')
     response.locals.error_msg = request.flash('error_msg')
     response.locals.error = request.flash('error')
@@ -63,15 +63,15 @@ app.use((request, response, next) => { // skicka medel
 
 
 // Routes
-app.use('/', require('./routes/index')) // använda index.js
-app.use('/users', require('./routes/users')) // använda users.js
-app.use('/chat', require('./routes/chat')) // använda chat.js
+app.use('/', require('./routes/index')) 
+app.use('/users', require('./routes/users')) 
+app.use('/chat', require('./routes/chat')) 
 
 
 
 // Socket (chat server sida)
 io.on('connection', (socket) => {  
-  console.log('a user connected'); // när nån ansluten till server
+  console.log('a user connected'); // when someone is connected to a server
 
    socket.on("joinRoom", ({ userName, roomId }) => {
 		const user = userJoin(socket.id, userName, roomId);
@@ -85,16 +85,16 @@ io.on('connection', (socket) => {
   socket.on('chat message', message => {  // chat message from script.js
    const user = getCurrentUser(socket.id);
    let author = user.username                            
-   io.to(user.room).emit('chat message',  formatMessage( author,  message ))  // sckica meddelande till alla i chat, alla se samma meddelande
+   io.to(user.room).emit('chat message',  formatMessage( author,  message ))  // send message to all ichat
     
-    // Spara data i dbb
+    // Save data in db
    User.findOne({ name: user.username}).exec(
      (error, currentUser) => {
        if(error) {
          throw error;
        }
        author = currentUser._id;
-       const newMessage = new Message({ message, author})  // skapa new message i model Message
+       const newMessage = new Message({ message, author}) 
        newMessage.save()  
 
        Room.updateOne(
@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
  
   
     socket.on('disconnect', () => {
-        console.log('a user disconnected')  // när användaren avslutet connection
+        console.log('a user disconnected')  // when user in not connected
       
    })
  })

@@ -1,6 +1,6 @@
-const express = require('express')  // hämta express paket 
-const router = express.Router() // sätta up router
-const moment = require('moment'); // for time
+const express = require('express')   
+const router = express.Router() 
+const moment = require('moment'); 
 
 const multer = require('multer');
 
@@ -10,9 +10,9 @@ const { ensureAuthenticated } = require('../config/auth')
 
 const Room = require('../models/rooms')  
 const User = require('../models/users')  
-const Message = require('../models/messages') 
 
-// for files  upload
+
+// for file  upload
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
       callback(null, 'public/uploads/')
@@ -24,15 +24,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// Dashboard   (visa alla rooms i sidebar)
+// Dashboard show all rooms in sidebar
 router.get('/dashboard', ensureAuthenticated, (request, response) => {
-   Room.find((err, data) => {   //data
+   Room.find((err, data) => {   
    if (err) return console.error(err);
    response.render('dashboard', { rooms: data, user: request.user })  
   })
  })
 
- // Users api (visa alla users )
+ // Users api (show all users)
  router.get('/users', ensureAuthenticated, (request, response) => {
   User.find({}, (err, users) => {
     if (err) return handleError(err);
@@ -49,12 +49,12 @@ router.post('/upload', upload.single('uploadFile'), (request, response) => {
 
 
  
-// Skapa ny rooms
+// Create new rooms
  router.post('/dashboard', ensureAuthenticated, (request, response) => {
-      const room = new Room({   // skapa ny room 
+      const room = new Room({   // create new room
       name: request.body.name
   });
-  room.save((err) => {    // spara room i db
+  room.save((err) => {   // save room in db
     if (err) return console.error(err);
     console.log('Channel created.');
     response.redirect('/chat/dashboard');
@@ -62,7 +62,7 @@ router.post('/upload', upload.single('uploadFile'), (request, response) => {
 });
 
 
-//Öpna ett room
+// Open one room
 router.get('/dashboard/:id', ensureAuthenticated, (request, response) => {
   Room.findById(request.params.id)
   .populate({path: 'messages', populate: { path: 'author', select: 'name'}})
@@ -74,4 +74,4 @@ router.get('/dashboard/:id', ensureAuthenticated, (request, response) => {
 });
 
 
-module.exports = router; //exportera den routen
+module.exports = router; 

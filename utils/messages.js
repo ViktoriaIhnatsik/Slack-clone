@@ -1,4 +1,4 @@
-const moment = require('moment'); // for time
+const moment = require('moment'); // time
 
 function formatMessage(username, text) {
   return {

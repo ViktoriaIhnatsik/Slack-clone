@@ -1,7 +1,7 @@
-const mongoose = require('mongoose') // importera mongoose paket 
+const mongoose = require('mongoose') 
 const Schema = mongoose.Schema;
 
-const RoomSchema = new mongoose.Schema({  // skapa schema
+const RoomSchema = new mongoose.Schema({  // create schema
     name: {
         type: String,
         required: true,
@@ -15,6 +15,6 @@ const RoomSchema = new mongoose.Schema({  // skapa schema
      
 })
 
-const Room = mongoose.model('Room', RoomSchema) // skapa model room
+const Room = mongoose.model('Room', RoomSchema) // create model room
 
-module.exports = Room // exportera model Room
+module.exports = Room 

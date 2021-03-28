@@ -1,5 +1,5 @@
-const mongoose = require('mongoose') // importera mongoose paket 
-const UserSchema = new mongoose.Schema({  // skapa schema
+const mongoose = require('mongoose') 
+const UserSchema = new mongoose.Schema({  // create schema
     name: {
         type: String,
         required: true
@@ -22,6 +22,6 @@ const UserSchema = new mongoose.Schema({  // skapa schema
 
 })
 
-const User = mongoose.model('User', UserSchema) // skapa model user
+const User = mongoose.model('User', UserSchema) // create model user
 
-module.exports = User // exportera model User
+module.exports = User 

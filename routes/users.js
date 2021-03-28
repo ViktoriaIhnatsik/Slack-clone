@@ -1,63 +1,63 @@
-const express = require('express')  // hämta express paket 
-const router = express.Router()  // sätta up router
+const express = require('express')  
+const router = express.Router()  
 
-const User = require('../models/users')  // User from models 
+const User = require('../models/users')   
 const bcrypt = require('bcrypt')  
 const passport = require('passport')
 
 
 // Login
 router.get('/login', (request, response) => {
-    response.render('login')   // använda login.ejs sida
+    response.render('login')   
 })
 // Register
 router.get('/register', (request, response) => {
-    response.render('register')   // använda register.ejs
+    response.render('register')   
 })
 
 // Login
 router.post('/login', (request, response, next) => {
-    passport.authenticate('local', {  //authenticate -> inbygda funkt passport
-        successRedirect: '/chat/dashboard', // vad ska hända om saker går bra eller inte
-        failureRedirect: '/users/login', // var användaren ska skickas 
+    passport.authenticate('local', {  //authenticate -> built in passport
+        successRedirect: '/chat/dashboard', // if success -> send user to dashboard
+        failureRedirect: '/users/login', // if fail -> send user to login
         failureFlash: true
-    })(request, response, next) // skicka vidare request
+    })(request, response, next) 
 })
 
 // Register
 router.post('/register', (request, response) => {
     const { name, email, password } = request.body  // from registern.ejs {name: ..., email: ..., password: ...}
 
-    let errors = []  // pusha nya fält om det uppstår olika error
+    let errors = []  // // push new fields if different errors occur
 
-    if (!name || !email || !password) { // om fälten toma
+    if (!name || !email || !password) { // if field is empty
         errors.push({ msg: "Please fill out all fields" })
     }
 
-    if (password.length < 6) { // kolla password
+    if (password.length < 6) { // check password
         errors.push({ msg: "Use at least 6 characters for your password" })
     }
 
-    if (errors.length > 0) { // om det finns nåt error
-        response.render('register', { // rendera register sida igen
-            errors, name, email, password // man kan göra ändringar där finns fel
+    if (errors.length > 0) { // if there is an error
+        response.render('register', { // render register page again
+            errors, name, email, password // user can make changes where exist errors
         })
     } 
     else {
-        const newUser = new User({ // om det finns inte error 
-            name, email, password // skapa new User
+        const newUser = new User({ //if there is no error
+            name, email, password // create new User
         })
 
-        // kryptera lösenord
-        bcrypt.hash(password, 10, function (error, hash) {  // bcrypt -> paket som kripterar lösenord
+        // encrypt passwords
+        bcrypt.hash(password, 10, function (error, hash) {  // bcrypt -> package that encrypts passwords
             // Store hash in your password DB
-            newUser.password = hash  // hash -> krypterad lösenord
+            newUser.password = hash  // hash -> encrypted password
 
-            newUser   // spara new User i database 
+            newUser   // save new User in database
                 .save()
                 .then(value => {
                     request.flash('success_msg', 'You have been registered!')
-                    response.redirect('/users/login')  // skicka tillbacka till inloggnings sida
+                    response.redirect('/users/login')  // send back to login page
                 })
                 .catch(error => console.log(error))
         });

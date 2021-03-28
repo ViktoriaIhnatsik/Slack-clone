@@ -1,9 +1,9 @@
 <main class="login">
 <div class="form-signin">
-<form action="/users/register" method="post"> <!-- form från bootstrap-->
+<form action="/users/register" method="post"> 
 
   <h1 class="h3 mb-3 fw-normal"> Please register </h1>
-  <%- include('partials/messages') %> <!-- includera fel meddelande från partials map messages.ejs-->
+  <%- include('partials/messages') %> 
 
     <label for="inputName" class="visually-hidden">Name</label>
 
@@ -14,7 +14,7 @@
     name="name" 
     placeholder="Name"
      value="<%= typeof name != 'undefined' ? name : '' %>" 
-     required autofocus>  <!-- kontrollera om det finns name, skriva ut det, annars tom sträng -->
+     required autofocus>  
 
     <label for="inputEmail" class="visually-hidden">Email address</label>
 
@@ -25,7 +25,7 @@
     name="email" 
     placeholder="Email address"
     value="<%= typeof email != 'undefined' ? email : '' %>" 
-    required>  <!-- kontrollera om det finns email, skriva ut det, , annars tom sträng -->
+    required>  
 
     <label for="inputPassword" class="visually-hidden">Password</label>
 
@@ -35,7 +35,7 @@
 
 </form>
 
-<p><a href="/users/login">Login</a></p> <!-- länk till inloggning sida-->
+<p><a href="/users/login">Login</a></p> 
 
 </div>
 

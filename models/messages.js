@@ -1,7 +1,7 @@
-const mongoose = require('mongoose') // importera mongoose paket 
+const mongoose = require('mongoose') 
 const Schema = mongoose.Schema;
 
-const MessageSchema = new mongoose.Schema({  // skapa schema
+const MessageSchema = new mongoose.Schema({  // create schema
      message: {
         type: String,
         required: true
@@ -20,6 +20,6 @@ const MessageSchema = new mongoose.Schema({  // skapa schema
 		} 
 })
 
-const Message = mongoose.model('Message', MessageSchema) // skapa model room
+const Message = mongoose.model('Message', MessageSchema) // create model Message
 
-module.exports = Message // exportera model Room
+module.exports = Message 

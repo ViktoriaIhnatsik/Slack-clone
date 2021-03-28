@@ -1,20 +1,17 @@
 <% if (typeof errors !='undefined' ) { %>
   <% for (error of errors) { %>
-    <!-- om det finns fel meddelande loopa igenom det-->
+    
 
     <div class="alert alert-danger" role="alert">
       <%= error.msg %>
-        <!-- msg -> fel meddelande vi skrev i users.js /register-->
     </div>
 
     <% } %>
       <% } %>
 
         <% if(success_msg !='' ) { %>
-          <!-- kolla om det finns success_msg -->
           <div class="alert alert-success" role="alert">
             <%= success_msg %>
-              <!--- visa success_msg-->
           </div>
           <% } %>
 

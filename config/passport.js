@@ -1,33 +1,34 @@
-const LocalStrategy = require('passport-local').Strategy // skapa strategy, sätt att inloga i passport kallas strategy
+const LocalStrategy = require('passport-local').Strategy // create strategy, way to log in passport
 const bcrypt = require('bcrypt')
-const User = require('../models/users')  // läsa model User
+const User = require('../models/users')  
 
-module.exports =  function(passport) {  // exportera för att använda det
-    passport.use(new LocalStrategy( // sätta upp
-        {  // konfigurations parametr
+// Set up strategy
+module.exports =  function(passport) {  
+    passport.use(new LocalStrategy( 
+        {  
             usernameField: 'email'
         },
         function (username, password, done) {
             User.findOne({ email: username}, function (error, user) {
-                if (error) {  // om error innehåller nåt
+                if (error) {  
                     return done(error)
                 }
 
-                if (!user) {  // if not user
+                if (!user) {  
                     return done(null, false, { message: 'Incorrect username.' })
                 }
 
-                // jämföra det som vi har i database och det som användare har skrivit
-                bcrypt.compare(password, user.password, (error, isMatch) => { // password ->  användare har skrivit i input
-                                                                            // user.password -> det som finns i database, det är krypterad
-                    if (error) { // kolla om det finns fel       
+                // compare info in db and what users have written
+                bcrypt.compare(password, user.password, (error, isMatch) => { // password ->  user wrotw in input
+                                                                            // user.password -> what we have in db, it's encrypted
+                    if (error) {      
                         throw error
                     }
 
-                    if (isMatch) { // om det matchar
-                        return done(null, user)  // retunera user obj
+                    if (isMatch) { // if it matches
+                        return done(null, user)  // return user obj
                     } 
-                    else { // om det inte matchar
+                    else { // if it's not matches
                         return done(null, false, { message: 'Incorrect password.' })
                     }
                 })
@@ -37,13 +38,13 @@ module.exports =  function(passport) {  // exportera för att använda det
     ))
 
 
-    // behöver föt att använda user objekt
-    passport.serializeUser((user, done) => { // funct för att spara user objekt i session
-        done(null, user.id) // user.id -> används som nyckel
+    
+    passport.serializeUser((user, done) => { // funct to save user objects in session
+        done(null, user.id) // user.id -> used as a key
     })
 
     passport.deserializeUser((id, done) => {  
-        User.findById(id, (error, user) => { // letar user by id, id -> som vi skickar in
+        User.findById(id, (error, user) => { // looking for user by id, id -> which we send in
             done(error, user)
         })
     })

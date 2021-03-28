@@ -1,6 +1,7 @@
 const socket = io()
 
-// Klient sida
+// Client page
+
 const userName = document.getElementById("userName").value;
 const roomId = document.getElementById("roomId").value;
 
@@ -14,29 +15,29 @@ let room = document.getElementById('room-name')
 socket.emit("joinRoom", { userName, roomId });
 
 
-// Message från input
+// Get message from input
 form.addEventListener('submit', e => {
-    e.preventDefault() // för att sida inte laddas om när användaren sckikar meddelade
+    e.preventDefault() // page does not reload when the user sends messages
     const message = input.value
-    if (message) {  // om input inehåller nåt sckicka event
-        socket.emit('chat message', message) // skicka meddelande, 'chat message' - kan bli vad som helst
+    if (message) {  // if input contains something
+        socket.emit('chat message', message) // send message
     }
 
-    input.value = '' // ta bort meddelade från input när användaren skickar det
-    input.value.focus() // focus i input efter
+    input.value = '' // delete message from input when user sends it
+    input.value.focus() // focus in input 
 })
 
 
 
-// Visa message i chaten
-socket.on('chat message',  message => {  // när det kommer chat message 
-    const div = document.createElement('div')// skapa ny div
+// Show message in chat
+socket.on('chat message',  message => {  // when comes  message
+    const div = document.createElement('div')// create new div
     div.classList.add('message') // add class message
     div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">
       ${message.text}
     </p>`
-    document.querySelector('.chat-messages').appendChild(div); // lägga message i chat
+    document.querySelector('.chat-messages').appendChild(div); // put message in chat
 
     //Scroll down
   const chatMessages = document.querySelector('.chat-messages');
@@ -46,7 +47,6 @@ socket.on('chat message',  message => {  // när det kommer chat message
 
 
 //Fetch and render users 
-
 renderUsers = (users) => {
   users.forEach((user) => {
     const li = document.createElement('li');
@@ -68,7 +68,7 @@ fetchUsers = () => {
     });
 };
 
-//Funktioner som ska köras när  sida laddas
+// When page is loaded
 document.addEventListener('DOMContentLoaded', () => {
   fetchUsers();
 
