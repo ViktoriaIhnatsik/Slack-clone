@@ -10,7 +10,6 @@ Node-krav
 - Kunna förstå och använda JSON
 - Kunna använda databaser
 - Kunna bygga API-providers
-
 - Kunna sätta upp chat-rum/kanaler
 - Skapa konto/logga in med det kontot (email och alias)
 - Kunna ladda upp en fil i valfritt användningsområde
