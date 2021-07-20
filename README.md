@@ -1,11 +1,12 @@
 # Slack-clone
-Ni ska bygga en Slack-klon.
+:link: 
 
-Node-krav
+ **JavaScript Backend kurs**
+>Uppgift:
+-Bygga en Slack-klon
 - Kunna sätta upp en server
 - Kunna sätta upp routes
 - Kunna använda EJS-templates
-- Förstå asynkron programmering
 - Kunna använda sockets
 - Kunna förstå och använda JSON
 - Kunna använda databaser
@@ -14,4 +15,4 @@ Node-krav
 - Skapa konto/logga in med det kontot (email och alias)
 - Kunna ladda upp en fil i valfritt användningsområde
 - Spara meddelanden, konton osv i databas
-- Visa att man behärskar Node-kraven
+
