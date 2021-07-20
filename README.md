@@ -3,7 +3,7 @@
 
  **JavaScript Backend kurs**
 >Uppgift:
--Bygga en Slack-klon
+- Bygga en Slack-klon
 - Kunna sätta upp en server
 - Kunna sätta upp routes
 - Kunna använda EJS-templates
