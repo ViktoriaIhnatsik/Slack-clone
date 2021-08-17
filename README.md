@@ -4,7 +4,6 @@
 >Uppgift:
 
 Individuell inlämningsuppgift - Slack-klon
-
 - Bygga en Slack-klon
 - Kunna sätta upp chat-rum/kanaler
 - Skapa konto/logga in med det kontot (email och alias)
