@@ -1,6 +1,6 @@
 # Slack-clone
 
- **JavaScript Backend kurs**
+ **JavaScript Backend kurs(Node.js)**
 >Uppgift:
 
 Individuell inlämningsuppgift - Slack-klon
